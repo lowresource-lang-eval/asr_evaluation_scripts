@@ -98,22 +98,26 @@ def evaluate_language_detection(test_data, golden_data):
             golden_family = golden_data_part['family']
 
 
-            #TODO: проверять ли соответствие группы семье
+            #we only check the lower levels of the hierarchy when the higher levels have been checked
             if golden_language == LANGUAGE_UNKNOWN:
                 total_surprise += 1
-                if test_language == golden_language:
-                    language_correct_surprise += 1
-                if test_group == golden_group:
-                    group_correct_surprise += 1
                 if test_family == golden_family:
                     family_correct_surprise += 1
+                    if test_group == golden_group:
+                        group_correct_surprise += 1
+                        if test_language == golden_language:
+                            language_correct_surprise += 1
             else:
-                if test_language == golden_language:
-                    language_correct_known += 1
-                if test_group == golden_group:
-                    group_correct_known += 1
                 if test_family == golden_family:
                     family_correct_known += 1
+                    if test_group == golden_group:
+                        group_correct_known += 1
+                        if test_language == golden_language:
+                            language_correct_known += 1
+
+
+
+
 
     total_known = total - total_surprise
 
