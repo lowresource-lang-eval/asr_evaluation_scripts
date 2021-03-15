@@ -72,8 +72,7 @@ def main():
             test_data = read_file(filename_task1)
             golden_data = read_file(filename_golden_main1)
         except Exception as e:
-            print(e)
-            return
+            raise Exception("Error occurred processing filename_task1: " + str(e))
         process_task_language_detection(filename_results, test_data, golden_data, input_dir)
     else:
         with open(filename_results, 'a', encoding='utf-8', newline='') as fout:
@@ -90,8 +89,7 @@ def main():
             test_data2 = read_file(filename_task2)
             golden_data2 = read_file(filename_golden_main2)
         except Exception as e:
-            print(e)
-            return
+            raise Exception("Error occurred processing filename_task2: " + str(e))
         process_task_transcription(filename_results, test_data2, golden_data2, input_dir, 'IPA')
     else:
         with open(filename_results, 'a', encoding='utf-8', newline='') as fout:
@@ -102,8 +100,7 @@ def main():
             test_data3 = read_file(filename_task3)
             golden_data3 = read_file(filename_golden_main3)
         except Exception as e:
-            print(e)
-            return
+            raise Exception("Error occurred processing filename_task3: " + str(e))
         process_task_transcription(filename_results, test_data3, golden_data3, input_dir, 'ortho')
     else:
         with open(filename_results, 'a', encoding='utf-8', newline='') as fout:
@@ -114,8 +111,7 @@ def main():
             test_data4 = read_file(filename_task4)
             golden_data4 = read_file(filename_golden_main4)
         except Exception as e:
-            print(e)
-            return
+            raise Exception("Error occurred processing filename_task4: " + str(e))
         process_task_num_speakers(filename_results, test_data4, golden_data4, input_dir)
     else:
         with open(filename_results, 'a', encoding='utf-8', newline='') as fout:
@@ -126,9 +122,7 @@ def process_task_language_detection(filename_results, test_data, golden_data, in
     results, errors = evaluate_language_detection(test_data, golden_data)
     with open(filename_results, 'a', encoding='utf-8', newline='') as fout:
         if errors:
-            fout.write('ERRORS\n')
-            for error in errors:
-                fout.write(error + '\n')
+            raise Exception('Errors occurred when scoring: ' + '\n'.join(errors))
         else:
             fout.write('language_total: %s\n' %  results['language_total'])
             fout.write('group_total: %s\n' % results['group_total'])
@@ -148,9 +142,7 @@ def process_task_transcription(filename_results, test_data, golden_data, input_d
     results, errors = evaluate_transcription(test_data, golden_data, mode)
     with open(filename_results, 'a', encoding='utf-8', newline='') as fout:
         if errors:
-            fout.write('ERRORS\n')
-            for error in errors:
-                fout.write(error + '\n')
+            raise Exception('Errors occurred when scoring: ' + '\n'.join(errors))
         else:
             if 'character_error_rate'+mode not in results:
                 raise Exception('no character_error_rate in results')
@@ -161,11 +153,8 @@ def process_task_num_speakers(filename_results, test_data, golden_data, input_di
     results, errors = evaluate_num_speakers(test_data, golden_data)
     with open(filename_results, 'a', encoding='utf-8', newline='') as fout:
         if errors:
-            fout.write('ERRORS\n')
-            for error in errors:
-                fout.write(error + '\n')
-        else:
-            fout.write('num_speakers_accuracy: %s\n' % results['num_speakers_accuracy'])
+            raise Exception('Errors occurred when scoring: ' + '\n'.join(errors))
+        fout.write('num_speakers_accuracy: %s\n' % results['num_speakers_accuracy'])
 
 
 def evaluate_language_detection(test_data, golden_data):
@@ -338,6 +327,11 @@ def read_file(filename):
     return file_data
 
 
-
 if __name__ == "__main__":
-    main()
+    try:
+        print('starting')
+        main()
+        exit(0)
+    except Exception as e:
+        print(str(e), file=sys.stderr)
+        exit(-1)
