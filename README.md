@@ -6,11 +6,11 @@
 1. ref: содержит файлы speakers_test.tsv, test.tsv, ortho_test.tsv
 2. res: содержит файлы:
 
--input_task1.tsv (результат классификации)
+- input_task1.tsv (результат классификации)
 
--input_task2.tsv (результат транскрибирования в IPA)
+- input_task2.tsv (результат транскрибирования в IPA)
 
--input_task3.tsv (результат орфографии)
+- input_task3.tsv (результат орфографии)
 
--input_task4.tsv (результат предсказания числа спикеров)
+- input_task4.tsv (результат предсказания числа спикеров)
 
