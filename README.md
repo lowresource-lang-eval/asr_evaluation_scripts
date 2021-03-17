@@ -3,8 +3,11 @@
 `python3 evaluate.py <путь к входящей директории> <путь к директории, куда будет записан результат>`
 
 Во входящей директории должны быть две поддиректории:
-1. ref: содержит файлы speakers_test.tsv, test.tsv, ortho_test.tsv
-2. res: содержит файлы:
+1. ref: содержит файлы:
+- speakers_test.tsv
+- test.tsv
+- ortho_test.tsv
+3. res: содержит файлы:
 
 - input_task1.tsv (результат классификации)
 
