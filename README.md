@@ -8,12 +8,8 @@
 - test.tsv
 - ortho_test.tsv
 3. res: содержит файлы:
-
 - input_task1.tsv (результат классификации)
-
 - input_task2.tsv (результат транскрибирования в IPA)
-
 - input_task3.tsv (результат орфографии)
-
 - input_task4.tsv (результат предсказания числа спикеров)
 
